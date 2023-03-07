@@ -1,0 +1,14 @@
+@media (max-width: 1300px) {
+    .container {
+        max-width: $containerTabletMaxWidth;
+    }
+
+    .logo {
+        display: none;
+    }
+
+    .logo-tablet {
+        display: flex;
+        align-items: center;
+    }
+}

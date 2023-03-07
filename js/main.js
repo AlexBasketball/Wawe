@@ -1,15 +1,26 @@
 document.addEventListener('DOMContentLoaded', ()=> {
     const searchBtn = document.querySelector('.search');
-    const headerForm = document.querySelector('.header-form');
-    const modal = document.querySelector('.header-modal');
-    const modalBtn = document.querySelector('.login');
-    const modalClose = document.querySelector('.header-modal__close');    
-
+    const headerForm = document.querySelector('.header-form');   
     
-    searchBtn.addEventListener('click', () => {
+    searchBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
         headerForm.classList.add('active');
         searchBtn.classList.add('hidden');
     });
+
+    headerForm.addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+
+    document.addEventListener('click', function(){
+        headerForm.classList.remove('active');
+        searchBtn.classList.remove('hidden');
+    });
+
+    const modal = document.querySelector('.header-modal');
+    const modalWindow = document.querySelector('.header-modal__window');
+    const modalBtn = document.querySelector('.login');
+    const modalClose = document.querySelector('.header-modal__close'); 
 
     modalBtn.addEventListener('click', () => {
         modal.classList.remove('hidden');
@@ -18,6 +29,14 @@ document.addEventListener('DOMContentLoaded', ()=> {
             modal.classList.add('hidden');
         });
     });
+
+    modalWindow.addEventListener('click', function(e){
+        e.stopPropagation();
+    });
+
+    modal.addEventListener('click', () => {
+        modal.classList.add('hidden');
+    })
 
     document.addEventListener('keydown', function(e){
         if (e.key === 'Escape') {
@@ -28,19 +47,23 @@ document.addEventListener('DOMContentLoaded', ()=> {
 
     const podcastsBtn = document.querySelector('.podcasts-btn');
     const podcastsItemsSpec = document.querySelectorAll('.podcasts-list__item_spec');
-    
+
     podcastsBtn.addEventListener('click', () => {
         podcastsItemsSpec.forEach(function(item) {
-            if (item.classList.contains('hidden')) {
-                item.classList.toggle('hidden');
-                item.style.position = 'relative';
+            if (item.classList.contains('hide')) {
+                item.classList.toggle('hide');
+                item.classList.add('show');
+                item.classList.remove('scale');
                 podcastsBtn.textContent = 'Скрыть';
             } else {
-                item.classList.toggle('hidden');
-                item.style.position = 'absolute';
+                item.classList.remove('show');
                 podcastsBtn.textContent = 'Ещё подкасты';
+                item.classList.add('scale');
+                setTimeout(function () {
+                    item.classList.toggle('hide')
+                }, 200);                                   
             }
-        });
+        });     
     });
 
 
@@ -119,6 +142,19 @@ document.addEventListener('DOMContentLoaded', ()=> {
           },
 
     })
-    
+
+    const aboutInput = document.querySelectorAll('.about-form__input');
+    const aboutForm = document.querySelector('.about-form');
+
+    aboutForm.addEventListener('submit', function(e){
+        e.preventDefault();
+        alert('Форма не отправлена')
+    })
+
+    aboutInput.forEach(function(item) {
+        item.addEventListener('input', function() {
+            item.value = item.value.replace(/[^a-zA-ZА-Яа-яЁё]/, '');   
+        })
+    })
 });
 

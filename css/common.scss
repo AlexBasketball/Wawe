@@ -1,5 +1,7 @@
 @import '_variables.scss';
 @import '_mixins.scss';
+@import 'fonts.scss';
+@import '_tablet.scss';
 
 * {
     box-sizing: border-box;
@@ -16,13 +18,14 @@ body {
     max-width: 100%;
     margin: 0;
     padding: 0;
+    font-family: 'Muller', sans-serif;
     list-style: none;
     text-decoration: none;
     scroll-behavior: smooth;
 }
 
 .container {
-    max-width: $containerMaxWidth;
+    max-width: $containerDesktopMaxWidth;
     margin: 0 auto;
 }
 
@@ -30,13 +33,14 @@ img {
     max-width: 100%;
 }
 
-.logo {
-    padding-right: 80px;
-}
-
 /*Header*/
 .header {
     padding-bottom: 0;
+}
+
+.logo {
+    display: flex;
+    padding-right: 80px;
 }
 
 .header-top {
@@ -49,7 +53,6 @@ img {
     &__list {
         @include flexible();
         padding: 0;
-        padding-right: 43px;
     }
 
     &__item {
@@ -67,7 +70,7 @@ img {
         font-size: 20px;
         line-height: 20px;
         color: #121723;
-        @include transition();
+        transition: color .3s ease, background-color .3s ease;
 
         &:hover {
             color: $blue;
@@ -91,9 +94,20 @@ img {
     right: 150px;
     @include flexible();
     background-color: $white;
+    border: 1px solid $black;
+    border-radius: 10px;
+    box-shadow: 0 0 40px rgba(0, 0, 0, .2);
     opacity: 0;
     visibility: hidden;
-    @include transition();
+    transition: opacity .3s ease, visibility .3s ease, border-color .3s ease;
+    
+    &:hover {
+        border-color: $lightPurple;
+    }
+
+    &:focus {
+        border-color: $blue;
+    }
 
     &__input {
         max-width: 278px;
@@ -109,8 +123,7 @@ img {
     &__search {
         background-color: $white;
         cursor: pointer;
-        border: none;
-        @include transition();  
+        border: none;  
     
         svg > path {
             transition: stroke .3s ease;
@@ -141,8 +154,7 @@ img {
 .search {
     background-color: $white;
     cursor: pointer;
-    border: none;
-    @include transition();  
+    border: none;  
 
     svg > path {
         transition: stroke .3s ease;
@@ -157,6 +169,9 @@ img {
     }
 }
 
+.logo-tablet {
+    display: none;
+}
 
 .login {
     padding: 10px 30.5px;
@@ -169,7 +184,7 @@ img {
     border: 2px solid $black;
     border-radius: 77px;
     cursor: pointer;
-    @include transition();
+    transition: color .3s ease, background-color .3s ease;
 
     &:hover {
         background-color: $black;
@@ -188,8 +203,8 @@ img {
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    @include transition();  
+    z-index: 1000; 
+    transition: visibility .3s ease, opacity .3s ease;
 
     &__window {
         position: absolute;
@@ -263,7 +278,8 @@ img {
             font-size: 20px;
             line-height: 150%;
             color: $blue;
-            @include transition();
+            transition: color .3s ease;
+
 
             &:hover {
                 color: $lightPurple;
@@ -279,7 +295,7 @@ img {
         width: 100%;
         margin-bottom: 30px;
         padding-bottom: 30px;
-        border-bottom: 1px solid rgba(230, 232, 236, 0.4);;
+        border-bottom: 1px solid rgba(230, 232, 236, 0.4);
     }
 
     &__input {
@@ -292,10 +308,10 @@ img {
         border: 1px solid $white;
         border-radius: 40px;
         color: #A1A6B4;
-        @include transition();
+        transition: background-color .3s ease, border-color .3s ease;
 
         &:hover {
-            background: #292e29;
+            background-color: #292e29;
         }
 
         &:focus {
@@ -316,15 +332,16 @@ img {
         border: 2px solid $blue;
         border-radius: 40px;
         cursor: pointer;
-        @include transition();
+        transition: background-color .3s ease, border-color .3s ease;
+
         &:hover {
             border-color: $lightPurple;
-            background: $lightPurple;
+            background-color: $lightPurple;
         }
 
         &:focus {
             border-color: $darkPurple;
-            background: $lightPurple;
+            background-color: $lightPurple;
         }
     }
 
@@ -346,7 +363,6 @@ img {
     }
 
     &__social {
-        @include transition();
 
         svg > rect {
             transition: fill .3s ease;
@@ -377,7 +393,7 @@ img {
         font-size: 16px;
         line-height: 16px;
         color: #121723;
-        @include transition();
+        transition: color .3s ease, background-color .3s ease;
 
         &:hover {
             color: $blue;
@@ -492,15 +508,15 @@ img {
         background: $blue;
         border: 2px solid $blue;
         border-radius: 40px;
-        @include transition();
+        transition: border-color .3s ease, background-color .3s ease;
 
         &:hover {
-            background: $lightPurple;
+            background-color: $lightPurple;
             border-color: $lightPurple;
         }
 
         &:focus {
-            background: $lightPurple;
+            background-color: $lightPurple;
             border-color: $darkPurple;
         }
     }
@@ -553,11 +569,57 @@ img {
         }
 
         &_spec {
-            position: absolute;
-            @include transition();
+            position: relative;
+            /*display: none;*/
+            transform: scale(1);
+            transition: all .3s ease;
         }
     }
 }
+
+.show {
+    display: block;
+    animation-duration: .3s;
+    animation-name: show;
+};
+
+@keyframes show {
+    from {
+        opacity: 0;
+        visibility: hidden;
+        transform: scale(0);
+    } 
+    to {
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1);
+    }
+}
+
+.hide {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    animation-duration: .3s;
+    animation-name: hide;
+}
+
+.scale {
+    transform: scale(0);
+}
+
+/*@keyframes hide {
+    from {
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1);
+    } 
+    to {
+        opacity: 0;
+        visibility: hidden;
+        transform: scale(0);
+    }
+}*/
 
 .podcasts-top {
     @include flexible();
@@ -567,7 +629,6 @@ img {
         display: flex;
         background: $white;
         cursor: pointer;
-        @include transition();
 
         svg > circle {
             transition: stroke .3s ease;
@@ -709,17 +770,17 @@ img {
     border: 2px solid $blue;
     border-radius: 40px;
     cursor: pointer;
-    @include transition();
+    transition: background-color .3s ease, color .3s ease, border-color .3s ease;
 
     &:hover {
         color: $white;
-        background: $blue;
+        background-color: $blue;
         border-color: $blue;
     }
 
     &:focus {
         color: $white;
-        background: $lightPurple;
+        background-color: $lightPurple;
         border-color: $darkPurple;
     }
 }
@@ -771,7 +832,7 @@ img {
         background: $lightGrey;
         border-radius: 10px;
         cursor: pointer;
-        @include transition();
+        transition: background-color .3s ease, outline .3s ease;
         z-index: 100;
 
         &::after {
@@ -818,16 +879,16 @@ img {
         border: 1px solid $grey;
         border-top: none;
         cursor: pointer;
-        @include transition();
+        transition: background-color .3s ease, color .3s ease;
 
         &:hover {
             color: $black;
-            background: #F5F6F7;
+            background-color: #F5F6F7;
         }
 
         &:focus {
             color: $black;
-            background: $lightPurple;
+            background-color: $lightPurple;
         }
 
         &:last-child {
@@ -853,8 +914,8 @@ img {
         border-radius: 77px;
         color: $black;
         background: $white;
-        @include transition();
         cursor: pointer;
+        transition: color .3s ease, background-color .3s ease;
 
         &:hover {
             background-color: $black;
@@ -884,8 +945,9 @@ img {
 
     &__item {
         border: 1px solid $lightGrey;
-        @include transition();
+        transition: all .3s ease;
         cursor: pointer;
+        transition: all .3s ease;
 
         &:hover .broadcast-grid__img {
             opacity: 0.7;
@@ -929,7 +991,7 @@ img {
     }
 
     &__img {
-        @include transition();
+        transition: opacity .3s ease;
     }
 
     &__capture {
@@ -954,7 +1016,7 @@ img {
     &__link {
         position: relative;
         display: inline-block;
-        max-width: 110px;
+        max-width: 125px;
         width: 100%;
         margin-bottom: 20px;
         margin-left: 14px;
@@ -964,7 +1026,6 @@ img {
         font-size: 16px;
         line-height: 16px;
         color: $black;
-        @include transition();
 
         &::before {
             content: '';
@@ -972,9 +1033,9 @@ img {
             width: 20px;
             height: 1px;
             top: 11px;
-            left: 80px;
+            left: 95px;
             background: $black;
-            @include transition();
+
         }
 
         &::after {
@@ -983,11 +1044,11 @@ img {
             width: 4px;
             height: 4px;
             top: 9px;
-            left: 96px;
+            left: 111px;
             border-left: 1px solid $black;
             border-bottom: 1px solid $black;
             transform: rotate(-130deg);
-            @include transition();
+
         }
     }
 }
@@ -1053,10 +1114,9 @@ img {
     }
 
     &__link {
-        @include transition();
 
         svg > path {
-            @include transition();
+            transition: fill .3s ease;
         }
 
         &:hover svg path {
@@ -1094,17 +1154,17 @@ img {
         border-radius: 77px;
         background: transparent;
         color: $lightPurple;
-        @include transition();
+        transition: color .3s ease, background-color .3s ease, border-color .3s ease;
 
         &:hover {
             color: $white;
-            background: $lightPurple;
+            background-color: $lightPurple;
             border-color: $lightPurple;
         }
 
         &:focus {
             color: $white;
-            background: $blue;
+            background-color: $blue;
             border-color: $blue;
         }
     }
@@ -1125,7 +1185,7 @@ img {
         border-bottom: 1px solid $white;
         background: $black;
         cursor: pointer;
-        @include transition();
+        transition: color .3s ease, border-color .3s ease, background-color .3s ease;
 
         &:hover &_title {
             color: $lightPurple;
@@ -1140,7 +1200,7 @@ img {
         }
 
         &:focus {
-            background: #292e39;
+            background-color: #292e39;
         }
 
         &_title {
@@ -1148,7 +1208,7 @@ img {
             font-size: 20px;
             line-height: 20px;
             color: $white;
-            @include transition();
+
         }
 
         &_icon {
@@ -1158,7 +1218,7 @@ img {
             height: 42px;
             border: 2px solid $darkGrey;
             border-radius: 50%;
-            @include transition();
+
 
             &::after {
                 content: '';
@@ -1181,8 +1241,8 @@ img {
         overflow: hidden;
         max-height: 0;
         padding-top: 0;
-        @include transition();
         box-sizing: content-box;
+        transition: opacity .3s ease;
     }
 
     &__link {
@@ -1194,7 +1254,7 @@ img {
         font-size: 16px;
         line-height: 16px;
         color: #FFFFFF;
-        @include transition();
+        transition: color .3s ease;
 
         &:hover {
             color: $darkPurple;
@@ -1276,6 +1336,7 @@ img {
         display: flex;
         align-items: center;
         cursor: pointer;
+        transition: border-color .3s ease, background-color .3s ease;
 
         &:hover .radio-form__custom {
             border-color: $blue;
@@ -1283,7 +1344,7 @@ img {
 
         &:focus .radio-form__custom {
             border-color: $blue;
-            background: #D2D5DD;
+            background-color: #D2D5DD;
         }
     }
 
@@ -1313,7 +1374,7 @@ img {
         border-radius: 50%;
         background: $white;
         vertical-align: middle;
-        @include transition();
+        transition: border-color .3s ease, background-color .3s ease;
 
         &::before {
             content: '';
@@ -1327,7 +1388,8 @@ img {
             border: 7px solid $blue;
             border-radius: 50%;
             background: $white;
-            @include transition();
+            transition: transform .3s ease;
+
         }
     }
 
@@ -1362,8 +1424,7 @@ img {
 
     &__item {
         position: relative;
-        cursor: pointer;
-        @include transition();
+        cursor: pointer;       
 
         &:hover .playlist-grid__btn {
             opacity: 1;
@@ -1376,7 +1437,7 @@ img {
         }
 
         &:hover .playlist-grid__content {
-            background: $blue;
+            background-color: $blue;
             border-color: $blue;
         }
 
@@ -1387,8 +1448,6 @@ img {
         &:hover .playlist-grid__text {
             color: $white;
         }
-
-
 
         &:focus .playlist-grid__btn {
             opacity: 1;
@@ -1401,7 +1460,7 @@ img {
         }
 
         &:focus .playlist-grid__content {
-            background: $lightPurple;
+            background-color: $lightPurple;
             border-color: $lightPurple;
         }
 
@@ -1426,7 +1485,7 @@ img {
     &__content {
         padding: 16px 21px 16px 16px;
         border: 1px solid $lightGrey;
-        @include transition();
+        transition: background-color .3s ease, border-color .3s ease;
     }
 
     &__heading {
@@ -1435,7 +1494,7 @@ img {
         font-size: 16px;
         line-height: 16px;
         color: $black;
-        @include transition();
+        transition: color .3s ease;
     }
 
     &__text {
@@ -1443,7 +1502,7 @@ img {
         font-size: 12px;
         line-height: 12px;
         color: $darkGrey;
-        @include transition();
+        transition: color .3s ease;
     }
 
     &__holder {
@@ -1459,7 +1518,7 @@ img {
         left: 0;
         background: $black;
         opacity: 0;
-        @include transition();
+        transition: opacity .3s ease, z-index .3s ease;
     }
 
     &__btn {
@@ -1473,7 +1532,7 @@ img {
         border-radius: 50%;
         cursor: pointer;
         opacity: 0;
-        @include transition();
+        transition: opacity .3s ease, z-index .3s ease;
     }
 }
 
@@ -1543,20 +1602,16 @@ img {
         border-radius: 100px;
         color: #F0D288;
         background: transparent;
-        @include transition();
+        transition: background-color .3s ease, color .3s ease;
 
         &:hover {
-            background: #F0D288;
+            background-color: #F0D288;
             color: $black;
-        }
-
-        svg > path {
-            @include transition();
         }
 
         &:focus {
             color: $black;
-            background: #BB973E;
+            background-color: #BB973E;
         }
     }
 
@@ -1615,6 +1670,10 @@ img {
     margin-right: 30px;
 }
 
+.about-bottom {
+    position: relative;
+}
+
 .swiper {
     margin-bottom: 30px;
 }
@@ -1643,18 +1702,18 @@ img {
     position: absolute;
     display: flex;
     align-items: center;
-    top: 35%;
+    top: 10%;
     z-index: 100;
-    transform: translate(10%, -35%);
+    background: transparent;
     cursor: pointer;
 }
 
 .swiper-custom-next {
-    right: 1%;
+    right: -8%;
 }
 
 .swiper-custom-prev {
-    left: 1%;
+    left: -8%;
 }
 
 .about-form {
@@ -1678,16 +1737,20 @@ img {
         line-height: 20px;
         color: $darkGrey;
         background: transparent;
-        @include transition();
+        transition: background-color .3s ease, border-color .3s ease;
 
         &:hover {
-           background: #292E39;
+           background-color: #292E39;
         }
 
         &:focus {
-            background: #292E39;
+            background-color: #292E39;
             border-color: $lightPurple;
         }
+    }
+
+    .error {
+        border-color: #D52B1E;
     }
 
     &__input_spec {
@@ -1708,15 +1771,15 @@ img {
         border-radius: 40px;
         cursor: pointer;
         margin-bottom: 30px;
-        @include transition();
+        transition: background-color .3s ease, border-color .3s ease;
 
         &:hover {
-            background: $lightPurple;
+            background-color: $lightPurple;
             border-color: $lightPurple;
         }
 
         &:focus {
-            background: $lightPurple;
+            background-color: $lightPurple;
             border-color: $darkPurple;
         }
     }
@@ -1755,7 +1818,7 @@ img {
             transform: scale(0) rotate(45deg);
             border-right: 2px solid $lightPurple;
             border-bottom: 2px solid $lightPurple;
-            @include transition();
+            transition: transform .3s ease;
         }
     }
 
@@ -1802,10 +1865,9 @@ img {
 
 .footer-link {
     margin-right: 25px;
-    @include transition();
 
-    svg path {
-        @include transition();
+    svg > path {
+        transition: fill .3s ease;
     }
 
     &:hover svg path {
@@ -1828,7 +1890,7 @@ img {
         font-size: 16px;
         line-height: 16px;
         color: $white;
-        @include transition();
+        transition: color .3s ease;
 
         &:hover {
             color: $blue;
